@@ -88,7 +88,7 @@ export default function ProfileForm() {
               name="nomEquipier"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Nom de l'équipier</FormLabel>
+                  <FormLabel>Nom de léquipier</FormLabel>
                   <FormControl>
                     <Input placeholder="Angelique Y." {...field} />
                   </FormControl>
