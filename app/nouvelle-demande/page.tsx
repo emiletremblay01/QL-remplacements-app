@@ -64,7 +64,6 @@ export default function ProfileForm() {
 
   // 2. Define a submit handler.
   function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
     toast({
       title: "You submitted the following data:",
       description: (
