@@ -6,9 +6,9 @@ export type Remplacement = {
   dateQuart: Date;
   posteQuart: string;
   heuresQuart: string;
-  raison?: string;
-  courrielEnvoye: "oui" | "non";
-  statut: "en attente" | "accepté" | "refusé";
+  raison: string | null;
+  courrielEnvoye: string;
+  statut: string;
   nomEquipierRemplacant: string;
   remplacementEffectuePar: string;
 };

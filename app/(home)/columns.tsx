@@ -1,19 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Remplacement } from "@/types";
+
+import CellAction from "./CellAction";
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -66,30 +59,7 @@ export const columns: ColumnDef<Remplacement>[] = [
   },
   {
     accessorKey: "courrielEnvoye",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Courriel envoyé?
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const statut = row.getValue("courrielEnvoye") as "oui" | "non";
-
-      return (
-        <div
-          className={cn("", {
-            "text-red-800 animate-pulse": statut === "non",
-          })}
-        >
-          {statut.toUpperCase()}
-        </div>
-      );
-    },
+    header: "Courriel envoyé?",
   },
   {
     accessorKey: "statut",
@@ -120,30 +90,6 @@ export const columns: ColumnDef<Remplacement>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

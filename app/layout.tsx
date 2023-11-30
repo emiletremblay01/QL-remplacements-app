@@ -11,11 +11,13 @@ export const metadata: Metadata = {
 };
 import { Toaster } from "@/components/ui/toaster";
 import { Separator } from "@/components/ui/separator";
+import prismadb from "@/lib/prismadb";
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const remplacements = prismadb.remplacement.findMany();
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -28,7 +30,7 @@ export default function RootLayout({
         >
           <Navbar />
           <div className="flex-1">{children}</div>
-          <footer>
+          <footer className="mt-16">
             <Separator />
             <p className="h-24 flex text-sm items-center justify-center text-muted-foreground">
               Développé par Émile Tremblay. Tous droits réservés.
