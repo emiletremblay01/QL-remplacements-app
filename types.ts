@@ -9,6 +9,6 @@ export type Remplacement = {
   raison: string | null;
   courrielEnvoye: string;
   statut: string;
-  nomEquipierRemplacant: string;
-  remplacementEffectuePar: string;
+  nomEquipierRemplacant: string | null;
+  remplacementEffectuePar: string | null;
 };
