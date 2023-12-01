@@ -112,7 +112,6 @@ export function NouvelleDemandeForm() {
             <FormField
               control={form.control}
               name="dateDemande"
-              defaultValue={new Date()}
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className="mt-1 pt-0.5 mb-1">
