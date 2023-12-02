@@ -30,6 +30,7 @@ import { toast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Remplacement } from "@prisma/client";
+import { ApprouverForm } from "./components/ApprouverForm";
 
 interface CellActionProps {
   data: Remplacement;
@@ -86,15 +87,9 @@ export default function CellAction({ data }: CellActionProps) {
         </DropdownMenuContent>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. Are you sure you want to permanently
-              delete this file from our servers?
-            </DialogDescription>
+            <DialogTitle>Approuver le remplacement</DialogTitle>
+            <ApprouverForm initialData={data} />
           </DialogHeader>
-          <DialogFooter>
-            <Button type="submit">Confirm</Button>
-          </DialogFooter>
         </DialogContent>
       </DropdownMenu>
     </Dialog>
