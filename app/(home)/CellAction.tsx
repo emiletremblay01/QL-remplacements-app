@@ -52,49 +52,51 @@ export default function CellAction({ data }: CellActionProps) {
     }
   };
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={() => {
-            router.push(`/${data.id}`);
-          }}
-        >
-          <Edit className="h-4 w-4 mr-2" />
-          Modifier
-        </DropdownMenuItem>
-        {data.statut === "en attente" && (
-          <DialogTrigger asChild>
-            <DropdownMenuItem>
-              <Check className=" h-4 w-4 mr-2" />
-              Approuver
-            </DropdownMenuItem>
-          </DialogTrigger>
-        )}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onDelete}>
-          <Trash className="h-4 w-4 mr-2" />
-          Supprimer
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. Are you sure you want to permanently
-            delete this file from our servers?
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button type="submit">Confirm</Button>
-        </DialogFooter>
-      </DialogContent>
-    </DropdownMenu>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push(`/${data.id}`);
+            }}
+          >
+            <Edit className="h-4 w-4 mr-2" />
+            Modifier
+          </DropdownMenuItem>
+          {data.statut === "en attente" && (
+            <DialogTrigger asChild>
+              <DropdownMenuItem>
+                <Check className=" h-4 w-4 mr-2" />
+                Approuver
+              </DropdownMenuItem>
+            </DialogTrigger>
+          )}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={onDelete}>
+            <Trash className="h-4 w-4 mr-2" />
+            Supprimer
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. Are you sure you want to permanently
+              delete this file from our servers?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button type="submit">Confirm</Button>
+          </DialogFooter>
+        </DialogContent>
+      </DropdownMenu>
+    </Dialog>
   );
 }
