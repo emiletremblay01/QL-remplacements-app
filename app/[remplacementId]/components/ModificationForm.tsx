@@ -116,13 +116,17 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
       }
 
       console.log(values);
-      if (initialData) {
-        await axios.patch(`/api/${params.remplacementId}`, values);
-      }
 
-      router.refresh();
-      router.push("/");
-      toast({ title: "Modification sauvegardée avec succès." });
+      if (initialData) {
+        await axios.patch(`/api/${initialData.id}`, values);
+        router.refresh();
+        router.push("/");
+        toast({ title: "Remplacement approuvé avec succès." });
+      } else {
+        await axios.post("/api", values);
+        router.push("/");
+        toast({ title: "Remplacement ajouté avec succès." });
+      }
     } catch (error) {
       toast({ title: "something went wrong" });
       console.error(error);

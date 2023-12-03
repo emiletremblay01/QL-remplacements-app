@@ -6,7 +6,6 @@ import { Remplacement } from "@prisma/client";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,31 +13,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Separator } from "@/components/ui/separator";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useParams, useRouter } from "next/navigation";
-import prismadb from "@/lib/prismadb";
+import { useRouter } from "next/navigation";
 
 interface RemplacementFormProps {
   initialData: Remplacement | null;
@@ -94,11 +76,14 @@ export function ApprouverForm({ initialData }: RemplacementFormProps) {
 
       if (initialData) {
         await axios.patch(`/api/${initialData.id}`, values);
+        router.refresh();
+        router.push("/");
+        toast({ title: "Remplacement approuvé avec succès." });
+      } else {
+        await axios.post("/api", values);
+        router.push("/");
+        toast({ title: "Remplacement ajouté avec succès." });
       }
-
-      router.refresh();
-      router.push("/");
-      toast({ title: "Remplacement aprouvé avec succès." });
     } catch (error) {
       toast({ title: "something went wrong" });
       console.error(error);
