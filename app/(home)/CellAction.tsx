@@ -1,3 +1,4 @@
+"use client";
 import {
   MoreHorizontal,
   ArrowUpDown,
@@ -5,6 +6,7 @@ import {
   Edit,
   CheckCircle2,
   Check,
+  HelpCircle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +18,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import {
   Dialog,
   DialogClose,
@@ -31,13 +40,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Remplacement } from "@prisma/client";
 import { ApprouverForm } from "./components/ApprouverForm";
+import { useState } from "react";
 
 interface CellActionProps {
   data: Remplacement;
 }
 export default function CellAction({ data }: CellActionProps) {
   const router = useRouter();
-
+  const [openDialog, setOpenDialog] = useState(false);
   const onDelete = async () => {
     try {
       await axios.delete(`/api/${data.id}`);
@@ -86,10 +96,28 @@ export default function CellAction({ data }: CellActionProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Approuver le remplacement</DialogTitle>
-            <ApprouverForm initialData={data} />
-          </DialogHeader>
+          <TooltipProvider delayDuration={200}>
+            <DialogHeader>
+              <DialogTitle className="flex gap-2 items-center">
+                Approuver le remplacement
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <HelpCircle className=" text-muted-foreground hover:fill-muted " />
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className=" p-4 space-y-4">
+                    <h1 className="text-lg">Ne pas oublier de: </h1>
+                    <p className=" text-muted-foreground">
+                      1. Échanger les quarts concernés dans workday
+                    </p>
+                    <p className=" text-muted-foreground">
+                      2. Remplacer les noms dans l'horaire des pauses
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </DialogTitle>
+              <ApprouverForm initialData={data} />
+            </DialogHeader>
+          </TooltipProvider>
         </DialogContent>
       </DropdownMenu>
     </Dialog>
