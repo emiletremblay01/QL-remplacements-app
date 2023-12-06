@@ -59,7 +59,6 @@ export function ApprouverForm({ initialData }: RemplacementFormProps) {
       ? {
           ...initialData,
           statut: "approuvé",
-          raison: initialData.raison ?? "",
           courrielEnvoye: initialData.courrielEnvoye === "oui" ? "oui" : "non",
           nomEquipierRemplacant: initialData.nomEquipierRemplacant ?? "",
           remplacementEffectuePar: initialData.remplacementEffectuePar ?? "",

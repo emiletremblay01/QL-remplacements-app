@@ -1,14 +1,13 @@
 export type Remplacement = {
   id: string;
-  nomEquipier: string;
-  dateDemande: Date;
-  recuPar: string;
-  dateQuart: Date;
-  posteQuart: string;
-  heuresQuart: string;
-  raison: string | null;
   courrielEnvoye: string;
+  dateDemande: Date;
+  dateQuart: Date;
+  heuresQuart: string;
+  nomEquipier: string;
+  nomEquipierRemplacant: string;
+  posteQuart: string;
+  recuPar: string;
+  remplacementEffectuePar: string;
   statut: string;
-  nomEquipierRemplacant: string | null;
-  remplacementEffectuePar: string | null;
 };

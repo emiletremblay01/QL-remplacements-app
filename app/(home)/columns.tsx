@@ -53,10 +53,7 @@ export const columns: ColumnDef<Remplacement>[] = [
     accessorKey: "heuresQuart",
     header: "Heures du quart",
   },
-  {
-    accessorKey: "raison",
-    header: "Raison",
-  },
+
   {
     accessorKey: "courrielEnvoye",
     header: "Courriel envoyé?",

@@ -42,7 +42,7 @@ export function DataTable<TData, TValue>({
       dateQuart: true,
       nomEquipier: true,
       nomEquipierRemplacant: false,
-      raison: false,
+
       recuPar: false,
       remplacementEffectuePar: false,
     });
