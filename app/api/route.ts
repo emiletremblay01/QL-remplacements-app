@@ -30,10 +30,6 @@ export async function POST(req: Request) {
       return new NextResponse("heuresQuart required", { status: 400 });
     }
 
-    // if (!body.raison) {
-    //   return new NextResponse("raison required", { status: 400 });
-    // }
-
     if (!body.courrielEnvoye) {
       return new NextResponse("courrielEnvoye required", { status: 400 });
     }
@@ -46,7 +42,7 @@ export async function POST(req: Request) {
         dateQuart: body.dateQuart,
         posteQuart: body.posteQuart,
         heuresQuart: body.heuresQuart,
-        raison: body.raison,
+
         courrielEnvoye: body.courrielEnvoye,
         statut: "en attente",
         nomEquipierRemplacant: "",

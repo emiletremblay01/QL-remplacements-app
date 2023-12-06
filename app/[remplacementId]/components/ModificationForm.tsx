@@ -54,7 +54,7 @@ const formSchema = z.object({
   dateQuart: z.date({ required_error: "dateQuart is required." }),
   posteQuart: z.string({ required_error: "posteQuart is required." }),
   heuresQuart: z.string({ required_error: "heuresQuart is required." }),
-  raison: z.string().optional(),
+
   courrielEnvoye: z.enum(["oui", "non"], {
     required_error: "Selectionner oui ou non.",
   }),
@@ -83,7 +83,7 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
               : initialData.statut === "approuvé"
               ? "approuvé"
               : "refusé",
-          raison: initialData.raison ?? "",
+
           courrielEnvoye: initialData.courrielEnvoye === "oui" ? "oui" : "non",
           nomEquipierRemplacant: initialData.nomEquipierRemplacant ?? "",
           remplacementEffectuePar: initialData.remplacementEffectuePar ?? "",

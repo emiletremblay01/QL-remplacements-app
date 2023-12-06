@@ -37,7 +37,7 @@ export async function PATCH(
       dateQuart,
       posteQuart,
       heuresQuart,
-      raison,
+
       courrielEnvoye,
       statut,
       nomEquipierRemplacant,
@@ -67,10 +67,6 @@ export async function PATCH(
     if (!heuresQuart) {
       return new NextResponse("heuresQuart required", { status: 400 });
     }
-
-    // if (!raison) {
-    //   return new NextResponse("raison required", { status: 400 });
-    // }
 
     if (!courrielEnvoye) {
       return new NextResponse("courrielEnvoye required", { status: 400 });
@@ -105,7 +101,7 @@ export async function PATCH(
         dateQuart,
         posteQuart,
         heuresQuart,
-        raison,
+
         courrielEnvoye,
         statut,
         nomEquipierRemplacant,
