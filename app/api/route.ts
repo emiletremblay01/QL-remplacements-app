@@ -1,6 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { NextResponse } from "next/server";
-export const revalidate = 0;
+
 // false | 'force-cache' | 0 | number
 export async function POST(req: Request) {
   try {
