@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 import { Toaster } from "@/components/ui/toaster";
 import { Separator } from "@/components/ui/separator";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
