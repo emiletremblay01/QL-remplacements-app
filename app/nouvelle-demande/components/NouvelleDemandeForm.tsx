@@ -41,19 +41,21 @@ import { useParams, useRouter } from "next/navigation";
 import prismadb from "@/lib/prismadb";
 
 const formSchema = z.object({
-  nomEquipier: z.string().min(2, {
-    message: "nomEquipier must be at least 2 characters.",
+  nomEquipier: z.string().min(1, {
+    message: "Le nom de l'équipier est requis.",
   }),
-  dateDemande: z.date({ required_error: "dateDemande is required." }),
-  recuPar: z.string().min(2, {
-    message: "recuPar must be at least 2 characters.",
+  dateDemande: z.date({ required_error: "La date de la demande est requise." }),
+  recuPar: z.string().min(1, {
+    message: "Le nom du directeur est requis.",
   }),
-  dateQuart: z.date({ required_error: "dateQuart is required." }),
-  posteQuart: z.string({ required_error: "posteQuart is required." }),
-  heuresQuart: z.string({ required_error: "heuresQuart is required." }),
+  dateQuart: z.date({ required_error: "La date du quart est requise." }),
+  posteQuart: z.string({ required_error: "Le poste du quart est requis." }),
+  heuresQuart: z.string({
+    required_error: "Les heures du quart sont requises",
+  }),
 
   courrielEnvoye: z.enum(["oui", "non"], {
-    required_error: "Selectionner oui ou non.",
+    required_error: "Sélectionner oui ou non.",
   }),
 });
 
