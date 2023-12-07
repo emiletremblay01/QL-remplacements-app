@@ -29,7 +29,7 @@ import { Remplacement } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ApprouverForm } from "./components/ApprouverForm";
+import { ApprouverForm } from "./ApprouverForm";
 
 interface CellActionProps {
   data: Remplacement;

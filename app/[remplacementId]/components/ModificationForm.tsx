@@ -120,11 +120,11 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
       if (initialData) {
         await axios.patch(`/api/${initialData.id}`, values);
         router.refresh();
-        router.push("/");
+        router.push("/home");
         toast({ title: "Remplacement approuvé avec succès." });
       } else {
         await axios.post("/api", values);
-        router.push("/");
+        router.push("/home");
         toast({ title: "Remplacement ajouté avec succès." });
       }
     } catch (error) {

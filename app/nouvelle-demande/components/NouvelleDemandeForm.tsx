@@ -77,7 +77,7 @@ export function NouvelleDemandeForm() {
       await axios.post(`/api`, values);
 
       router.refresh();
-      router.push("/");
+      router.push("/home");
       toast({ title: "Remplacement ajouté avec succès." });
     } catch (error) {
       toast({ title: "something went wrong" });

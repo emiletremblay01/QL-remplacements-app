@@ -1,5 +1,5 @@
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { columns } from "./components/columns";
+import { DataTable } from "./components/data-table";
 import { getAllRemplacements } from "@/actions/get-all-remplacements";
 
 export default async function Home() {
