@@ -5,6 +5,7 @@ import { getAllRemplacements } from "@/actions/get-all-remplacements";
 
 export default async function Home() {
   revalidatePath("/home");
+  console.log("Home page revalidated");
   const remplacements = await getAllRemplacements();
   return (
     <div className="container mx-auto py-10">
