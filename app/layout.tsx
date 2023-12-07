@@ -11,13 +11,12 @@ export const metadata: Metadata = {
 };
 import { Toaster } from "@/components/ui/toaster";
 import { Separator } from "@/components/ui/separator";
-import prismadb from "@/lib/prismadb";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const remplacements = prismadb.remplacement.findMany();
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
