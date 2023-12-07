@@ -57,7 +57,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
     const remplacements = await prismadb.remplacement.findMany();
 
