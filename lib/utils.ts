@@ -9,6 +9,10 @@ import { cache } from "react";
 import prismadb from "./prismadb";
 
 export const getRemplacements = cache(async () => {
-  const item = await prismadb.remplacement.findMany();
-  return item;
+  const remplacements = await prismadb.remplacement.findMany({
+    orderBy: {
+      dateDemande: "desc",
+    },
+  });
+  return remplacements;
 });
