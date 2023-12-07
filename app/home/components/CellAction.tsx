@@ -37,6 +37,7 @@ interface CellActionProps {
 export default function CellAction({ data }: CellActionProps) {
   const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
+  const closeDialog = () => setOpenDialog(false);
   const onDelete = async () => {
     try {
       await axios.delete(`/api/${data.id}`);
@@ -52,7 +53,7 @@ export default function CellAction({ data }: CellActionProps) {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -70,7 +71,7 @@ export default function CellAction({ data }: CellActionProps) {
             <Edit className="h-4 w-4 mr-2" />
             Modifier
           </DropdownMenuItem>
-          {data.statut === "en attente" && (
+          {data.statut === "en attente" && data.courrielEnvoye === "oui" && (
             <DialogTrigger asChild>
               <DropdownMenuItem>
                 <Check className=" h-4 w-4 mr-2" />
@@ -104,7 +105,7 @@ export default function CellAction({ data }: CellActionProps) {
                   </TooltipContent>
                 </Tooltip>
               </DialogTitle>
-              <ApprouverForm initialData={data} />
+              <ApprouverForm initialData={data} closeDialog={closeDialog} />
             </DialogHeader>
           </TooltipProvider>
         </DialogContent>

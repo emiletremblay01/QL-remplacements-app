@@ -22,9 +22,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 
-interface RemplacementFormProps {
-  initialData: Remplacement | null;
-}
 const formSchema = z.object({
   nomEquipier: z.string().min(2, {
     message: "nomEquipier must be at least 2 characters.",
@@ -43,11 +40,21 @@ const formSchema = z.object({
   statut: z.enum(["en attente", "approuvé", "refusé"], {
     required_error: "Selectionner un statut.",
   }),
-  nomEquipierRemplacant: z.string(),
-  remplacementEffectuePar: z.string(),
+  nomEquipierRemplacant: z.string().min(1, {
+    message: "Le nom du remplaçant est requis.",
+  }),
+  remplacementEffectuePar: z.string().min(1, {
+    message: "Le nom du directeur est requis.",
+  }),
 });
 
-export function ApprouverForm({ initialData }: RemplacementFormProps) {
+export function ApprouverForm({
+  initialData,
+  closeDialog,
+}: {
+  initialData: Remplacement | null;
+  closeDialog: () => void;
+}) {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -75,14 +82,15 @@ export function ApprouverForm({ initialData }: RemplacementFormProps) {
 
       if (initialData) {
         await axios.patch(`/api/${initialData.id}`, values);
-        router.refresh();
         router.push("/home");
         toast({ title: "Remplacement approuvé avec succès." });
+        router.refresh();
       } else {
         await axios.post("/api", values);
         router.push("/home");
         toast({ title: "Remplacement ajouté avec succès." });
       }
+      closeDialog();
     } catch (error) {
       toast({ title: "something went wrong" });
       console.error(error);

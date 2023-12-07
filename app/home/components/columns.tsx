@@ -57,6 +57,19 @@ export const columns: ColumnDef<Remplacement>[] = [
   {
     accessorKey: "courrielEnvoye",
     header: "Courriel envoyé?",
+    cell: ({ row }) => {
+      const statut = row.getValue("courrielEnvoye") as string;
+
+      return (
+        <div
+          className={cn("", {
+            " text-red-800 animate-pulse": statut === "non",
+          })}
+        >
+          {statut.toUpperCase()}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "statut",
