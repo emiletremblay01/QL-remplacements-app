@@ -1,5 +1,12 @@
 "use client";
-import { Check, Edit, HelpCircle, MoreHorizontal, Trash } from "lucide-react";
+import {
+  Check,
+  Edit,
+  HelpCircle,
+  MoreHorizontal,
+  Send,
+  Trash,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -103,13 +110,9 @@ export default function CellAction({ data }: CellActionProps) {
               Modifier
             </DropdownMenuItem>
             {data.statut === "en attente" && data.courrielEnvoye === "non" && (
-              <DropdownMenuItem
-                onClick={() => {
-                  router.push(`/${data.id}`);
-                }}
-              >
-                <Edit className="h-4 w-4 mr-2" />
-                Envoyer courriel
+              <DropdownMenuItem onClick={envoyerCourriel}>
+                <Send className="h-4 w-4 mr-2" />
+                Confirmer courriel
               </DropdownMenuItem>
             )}
             {data.statut === "en attente" && data.courrielEnvoye === "oui" && (
