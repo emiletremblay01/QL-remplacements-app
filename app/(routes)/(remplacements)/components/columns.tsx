@@ -9,12 +9,12 @@ import CellAction from "./CellAction";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+const getRandomItem = (array: String[]) => {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+};
 
 export const columns: ColumnDef<Remplacement>[] = [
-  {
-    accessorKey: "nomEquipier",
-    header: "Nom de l'équipier",
-  },
   {
     accessorKey: "dateDemande",
     header: "Date de la demande",
@@ -29,12 +29,17 @@ export const columns: ColumnDef<Remplacement>[] = [
     },
   },
   {
+    accessorKey: "nomEquipier",
+    header: "Nom de l'équipier",
+  },
+
+  {
     accessorKey: "recuPar",
     header: "Reçu par",
   },
   {
     accessorKey: "dateQuart",
-    header: "Date du quart",
+    header: "Date",
     cell: ({ row }) => {
       const formatter = new Intl.DateTimeFormat("fr-CA", {
         day: "2-digit",
@@ -46,12 +51,12 @@ export const columns: ColumnDef<Remplacement>[] = [
     },
   },
   {
-    accessorKey: "posteQuart",
-    header: "Poste du quart",
+    accessorKey: "heuresQuart",
+    header: "Heures",
   },
   {
-    accessorKey: "heuresQuart",
-    header: "Heures du quart",
+    accessorKey: "posteQuart",
+    header: "Poste",
   },
 
   {
@@ -92,7 +97,12 @@ export const columns: ColumnDef<Remplacement>[] = [
   },
   {
     accessorKey: "nomEquipierRemplacant",
-    header: "Nom de l'équipier remplaçant",
+    header: "Remplaçant",
+    cell: ({ row }) => {
+      const statut = row.getValue("nomEquipierRemplacant") as string;
+
+      return <div className=" text-lg">{statut === "" ? "🤷🏻‍♀️" : statut}</div>;
+    },
   },
   {
     accessorKey: "remplacementEffectuePar",

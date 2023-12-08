@@ -37,7 +37,6 @@ export async function PATCH(
       dateQuart,
       posteQuart,
       heuresQuart,
-
       courrielEnvoye,
       statut,
       nomEquipierRemplacant,

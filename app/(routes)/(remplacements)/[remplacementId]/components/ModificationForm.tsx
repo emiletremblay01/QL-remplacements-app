@@ -1,8 +1,7 @@
 "use client";
 
-import axios from "axios";
-import { useState } from "react";
-import { Remplacement } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -13,74 +12,120 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "@/components/ui/use-toast";
+import { Remplacement } from "@prisma/client";
+import axios from "axios";
+import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useParams, useRouter } from "next/navigation";
-import prismadb from "@/lib/prismadb";
 
+interface RemplacementFormProps {
+  initialData: Remplacement | null;
+}
 const formSchema = z.object({
-  nomEquipier: z.string().min(1, {
-    message: "Le nom de l'équipier est requis.",
+  nomEquipier: z.string().min(2, {
+    message: "nomEquipier must be at least 2 characters.",
   }),
-  dateDemande: z.date({ required_error: "La date de la demande est requise." }),
-  recuPar: z.string().min(1, {
-    message: "Le nom du directeur est requis.",
+  dateDemande: z.date({ required_error: "dateDemande is required." }),
+  recuPar: z.string().min(2, {
+    message: "recuPar must be at least 2 characters.",
   }),
-  dateQuart: z.date({ required_error: "La date du quart est requise." }),
-  posteQuart: z.string({ required_error: "Le poste du quart est requis." }),
-  heuresQuart: z.string({
-    required_error: "Les heures du quart sont requises",
-  }),
+  dateQuart: z.date({ required_error: "dateQuart is required." }),
+  posteQuart: z.string({ required_error: "posteQuart is required." }),
+  heuresQuart: z.string({ required_error: "heuresQuart is required." }),
 
   courrielEnvoye: z.enum(["oui", "non"], {
-    required_error: "Sélectionner oui ou non.",
+    required_error: "Selectionner oui ou non.",
   }),
+  statut: z.enum(["en attente", "approuvé", "refusé"], {
+    required_error: "Selectionner un statut.",
+  }),
+  nomEquipierRemplacant: z.string().optional(),
+  remplacementEffectuePar: z.string().optional(),
 });
 
-export function NouvelleDemandeForm() {
-  const [loading, setLoading] = useState(false);
+export function ModificationForm({ initialData }: RemplacementFormProps) {
+  const params = useParams();
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      dateDemande: new Date(),
-      courrielEnvoye: "non",
-    },
+    defaultValues: initialData
+      ? {
+          ...initialData,
+          statut:
+            initialData.statut === "en attente"
+              ? "en attente"
+              : initialData.statut === "approuvé"
+              ? "approuvé"
+              : "refusé",
+
+          courrielEnvoye: initialData.courrielEnvoye === "oui" ? "oui" : "non",
+          nomEquipierRemplacant: initialData.nomEquipierRemplacant ?? "",
+          remplacementEffectuePar: initialData.remplacementEffectuePar ?? "",
+        }
+      : {
+          courrielEnvoye: "non",
+        },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setLoading(true);
+      if (values.statut === "approuvé") {
+        if (
+          values.nomEquipierRemplacant?.trim().length === 0 ||
+          !values.nomEquipierRemplacant
+        )
+          throw new Error(
+            "nomEquipierRemplacant required because statut is approuvé"
+          );
 
-      await axios.post(`/api`, values);
+        if (
+          values.remplacementEffectuePar?.trim().length === 0 ||
+          !values.remplacementEffectuePar
+        )
+          throw new Error(
+            "remplacementEffectuePar required because statut is approuvé"
+          );
+      }
 
-      router.refresh();
-      router.push("/home");
-      toast({ title: "Remplacement ajouté avec succès." });
+      console.log(values);
+
+      if (initialData) {
+        await axios.patch(`/api/${initialData.id}`, values);
+        router.refresh();
+        router.push("/");
+        toast({ title: "Remplacement approuvé avec succès." });
+      } else {
+        await axios.post("/api", values);
+        router.push("/");
+        toast({ title: "Remplacement ajouté avec succès." });
+      }
     } catch (error) {
       toast({ title: "something went wrong" });
       console.error(error);
@@ -102,7 +147,7 @@ export function NouvelleDemandeForm() {
               name="nomEquipier"
               render={({ field }) => (
                 <FormItem className=" md:basis-60 shrink-0">
-                  <FormLabel>Nom de léquipier</FormLabel>
+                  <FormLabel>Nom de l'équipier</FormLabel>
                   <FormControl>
                     <Input placeholder="Angelique Y." {...field} />
                   </FormControl>
@@ -294,12 +339,97 @@ export function NouvelleDemandeForm() {
             />
           </div>
 
+          <Separator />
+
+          <div className="flex flex-col md:flex-row gap-6 items-start w-full ">
+            <FormField
+              control={form.control}
+              name="statut"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Statut</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="en attente"
+                            className="text-yellow-800"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          En attente
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="approuvé"
+                            className="text-green-800"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Approuvé</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="refusé"
+                            className=" text-red-800"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Refusé</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="nomEquipierRemplacant"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Remplaçant</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Mathieu L." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Le nom de l'équipier qui effectuera le remplacement.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="remplacementEffectuePar"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Remplacement effectué par:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Samuel C." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Le nom du directeur qui a effectué le remplacement.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <Button
             type="submit"
             disabled={loading}
             className="self-center w-fit"
           >
-            SOUMETTRE
+            SAUVEGARDER LES CHANGEMENTS
           </Button>
         </form>
       </Form>

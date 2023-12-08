@@ -82,12 +82,12 @@ export function ApprouverForm({
 
       if (initialData) {
         await axios.patch(`/api/${initialData.id}`, values);
-        router.push("/home");
+        router.push("/");
         toast({ title: "Remplacement approuvé avec succès." });
         router.refresh();
       } else {
         await axios.post("/api", values);
-        router.push("/home");
+        router.push("/");
         toast({ title: "Remplacement ajouté avec succès." });
       }
       closeDialog();

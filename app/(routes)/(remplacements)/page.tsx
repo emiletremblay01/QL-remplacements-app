@@ -1,3 +1,9 @@
+// TODO: Add loading skeleton
+// TODO: Add Statut handling vs Courriel envoyé
+// TODO: Add toggle for couriel envoyé inside datatable
+// TODO: Change Affichage de colonnes columns names
+// TODO: Clean up code imports
+
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 
