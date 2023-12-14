@@ -9,10 +9,6 @@ import CellAction from "./CellAction";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-const getRandomItem = (array: String[]) => {
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-};
 
 export const columns: ColumnDef<Remplacement>[] = [
   {
@@ -101,7 +97,15 @@ export const columns: ColumnDef<Remplacement>[] = [
     cell: ({ row }) => {
       const statut = row.getValue("nomEquipierRemplacant") as string;
 
-      return <div className=" text-lg">{statut === "" ? "🤷🏻‍♀️" : statut}</div>;
+      return (
+        <div
+          className={cn("", {
+            "text-lg": statut === "",
+          })}
+        >
+          {statut === "" ? "🤷🏻‍♀️" : statut}
+        </div>
+      );
     },
   },
   {
