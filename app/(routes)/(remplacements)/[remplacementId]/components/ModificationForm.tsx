@@ -57,7 +57,7 @@ const formSchema = z.object({
   courrielEnvoye: z.enum(["oui", "non"], {
     required_error: "Selectionner oui ou non.",
   }),
-  statut: z.enum(["en attente", "approuvé", "refusé"], {
+  statut: z.enum(["en attente", "approuvé", "non remplacé"], {
     required_error: "Selectionner un statut.",
   }),
   nomEquipierRemplacant: z.string().optional(),
@@ -81,7 +81,7 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
               ? "en attente"
               : initialData.statut === "approuvé"
               ? "approuvé"
-              : "refusé",
+              : "non remplacé",
 
           courrielEnvoye: initialData.courrielEnvoye === "oui" ? "oui" : "non",
           nomEquipierRemplacant: initialData.nomEquipierRemplacant ?? "",
@@ -377,11 +377,13 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem
-                            value="refusé"
+                            value="non remplacé"
                             className=" text-red-800"
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">Refusé</FormLabel>
+                        <FormLabel className="font-normal">
+                          Non remplacé
+                        </FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>

@@ -83,7 +83,7 @@ export const columns: ColumnDef<Remplacement>[] = [
           className={cn("px-2 py-1 flex justify-center w-full rounded-full", {
             "bg-yellow-100 text-yellow-800": statut === "en attente",
             "bg-green-100 text-green-800": statut === "approuvé",
-            "bg-red-100 text-red-800": statut === "refusé",
+            "bg-red-100 text-red-800": statut === "non remplacé",
           })}
         >
           <p className="shrink-0 text-xs">{statut.toUpperCase()}</p>

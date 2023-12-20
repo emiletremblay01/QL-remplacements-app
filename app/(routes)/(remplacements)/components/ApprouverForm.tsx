@@ -37,7 +37,7 @@ const formSchema = z.object({
   courrielEnvoye: z.enum(["oui", "non"], {
     required_error: "Selectionner oui ou non.",
   }),
-  statut: z.enum(["en attente", "approuvé", "refusé"], {
+  statut: z.enum(["en attente", "approuvé", "non remplacé"], {
     required_error: "Selectionner un statut.",
   }),
   nomEquipierRemplacant: z.string().min(1, {

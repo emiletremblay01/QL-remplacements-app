@@ -4,18 +4,18 @@
 // TODO: Change Affichage de colonnes columns names
 // TODO: Clean up code imports
 
-import { columns } from "./components/columns";
-import { DataTable } from "./components/data-table";
+import { columns } from "../components/columns";
+import { DataTable } from "../components/data-table";
 
-import { getLatestRemplacements } from "@/lib/utils";
+import { getAllRemplacements } from "@/lib/utils";
 
 export const revalidate = 0;
-export default async function HomePage() {
-  const remplacements = await getLatestRemplacements();
+export default async function AllRemplacements() {
+  const remplacements = await getAllRemplacements();
   return (
     <div className="container mx-auto py-10 space-y-2">
-      <h1 className=" font-semibold text-muted-foreground text-lg">
-        Remplacements des jours à venir
+      <h1 className="font-semibold text-muted-foreground text-lg">
+        Historique de tous les remplacements
       </h1>
       <DataTable columns={columns} data={remplacements} />
     </div>
