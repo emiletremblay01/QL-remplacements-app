@@ -1,12 +1,18 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import Papa from "papaparse";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 import { cache } from "react";
 import prismadb from "./prismadb";
+
+export const convertToCSV = (jsonData: unknown[]) => {
+  const csv = Papa.unparse(jsonData);
+  return csv;
+};
 
 export const getLatestRemplacements = cache(async () => {
   const currentDate = new Date();
