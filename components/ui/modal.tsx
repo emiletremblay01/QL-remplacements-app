@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
 // import { Button } from "@/components/ui/button";
 
 interface ModalProps {
@@ -25,6 +26,13 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
   const onChange = (open: boolean) => {
     if (!open) {
       onClose();
