@@ -67,7 +67,7 @@ export const columns: ColumnDef<Remplacement>[] = [
             " text-red-800 animate-pulse": statut === "non",
           })}
         >
-          {statut.toUpperCase()}
+          {statut === "non" ? statut.toUpperCase() : statut}
         </div>
       );
     },

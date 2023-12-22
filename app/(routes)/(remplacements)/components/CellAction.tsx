@@ -51,9 +51,14 @@ export default function CellAction({ data }: CellActionProps) {
   const envoyerCourriel = async () => {
     try {
       setLoading(true);
+      const formatter = new Intl.DateTimeFormat("fr-CA", {
+        day: "2-digit",
+        month: "short",
+      });
+      const formatted = formatter.format(new Date());
       await axios.patch(`/api/${data.id}`, {
         ...data,
-        courrielEnvoye: "oui",
+        courrielEnvoye: formatted,
       });
       router.refresh();
       toast({ title: "Envoi du courriel aux équipiers confirmé." });
@@ -113,6 +118,12 @@ export default function CellAction({ data }: CellActionProps) {
               <DropdownMenuItem onClick={envoyerCourriel}>
                 <Send className="h-4 w-4 mr-2" />
                 Confirmer courriel
+              </DropdownMenuItem>
+            )}
+            {data.statut === "en attente" && data.courrielEnvoye !== "non" && (
+              <DropdownMenuItem onClick={envoyerCourriel}>
+                <Send className="h-4 w-4 mr-2" />
+                Relancer courriel
               </DropdownMenuItem>
             )}
             {data.statut === "en attente" && data.courrielEnvoye === "oui" && (

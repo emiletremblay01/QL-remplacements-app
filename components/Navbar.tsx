@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import SettingBtn from "@/components/setting-btn";
 export default function Navbar() {
   const pathname = usePathname();
 
@@ -48,6 +49,7 @@ export default function Navbar() {
           </Button>
 
           <ModeToggle />
+          {/* <SettingBtn /> */}
         </div>
       </nav>
       <Separator className="mb-16" />

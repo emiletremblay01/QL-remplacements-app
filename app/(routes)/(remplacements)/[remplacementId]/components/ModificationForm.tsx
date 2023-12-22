@@ -68,6 +68,10 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
   const params = useParams();
   const router = useRouter();
 
+  const formatted = new Intl.DateTimeFormat("fr-CA", {
+    day: "2-digit",
+    month: "short",
+  }).format(new Date());
   const [loading, setLoading] = useState(false);
 
   // 1. Define your form.
