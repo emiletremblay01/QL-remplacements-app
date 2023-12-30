@@ -238,7 +238,7 @@ export function NouvelleDemandeForm() {
                       <SelectItem value="Plancher">Plancher</SelectItem>
                       <SelectItem value="Concession">Concession</SelectItem>
                       <SelectItem value="Café">Café</SelectItem>
-                      <SelectItem value="Billeterie">Billeterie</SelectItem>
+                      <SelectItem value="Billetterie">Billetterie</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

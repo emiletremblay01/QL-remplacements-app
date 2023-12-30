@@ -24,7 +24,7 @@ export const getLatestRemplacements = cache(async () => {
       },
     },
     orderBy: {
-      dateDemande: "desc",
+      dateQuart: "asc",
     },
   });
   return remplacements;
