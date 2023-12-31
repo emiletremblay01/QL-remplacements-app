@@ -1,6 +1,6 @@
 export type Remplacement = {
   id: string;
-  courrielEnvoye: string;
+  courrielEnvoye: Date[];
   dateDemande: Date;
   dateQuart: Date;
   heuresQuart: string;

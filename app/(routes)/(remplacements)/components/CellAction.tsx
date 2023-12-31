@@ -51,21 +51,25 @@ export default function CellAction({ data }: CellActionProps) {
   const envoyerCourriel = async () => {
     try {
       setLoading(true);
-      const formatter = new Intl.DateTimeFormat("fr-CA", {
-        day: "2-digit",
-        month: "short",
-      });
-      const formatted = formatter.format(new Date());
+
+      // If the email has already been sent today, we don't want to add a new date to the array
+      // We only want to add a new date if it's the first email sent today
+      const isFirstEmailToday =
+        data.courrielEnvoye.length > 0 &&
+        new Date(data.courrielEnvoye[0]).setHours(0, 0, 0, 0) ===
+          new Date().setHours(0, 0, 0, 0);
+      if (!isFirstEmailToday) {
+        data.courrielEnvoye.unshift(new Date());
+      }
+
       await axios.patch(`/api/${data.id}`, {
         ...data,
-        courrielEnvoye: formatted,
       });
       router.refresh();
       toast({ title: "Envoi du courriel aux équipiers confirmé." });
     } catch (error) {
       toast({
-        title:
-          "an error occurred while sending the email, please try again later",
+        title: "Erreur",
       });
       console.error(error);
     } finally {
@@ -114,19 +118,14 @@ export default function CellAction({ data }: CellActionProps) {
               <Edit className="h-4 w-4 mr-2" />
               Modifier
             </DropdownMenuItem>
-            {data.statut === "en attente" && data.courrielEnvoye === "non" && (
+            {data.statut === "en attente" && (
               <DropdownMenuItem onClick={envoyerCourriel}>
                 <Send className="h-4 w-4 mr-2" />
                 Confirmer courriel
               </DropdownMenuItem>
             )}
-            {data.statut === "en attente" && data.courrielEnvoye !== "non" && (
-              <DropdownMenuItem onClick={envoyerCourriel}>
-                <Send className="h-4 w-4 mr-2" />
-                Relancer courriel
-              </DropdownMenuItem>
-            )}
-            {data.statut === "en attente" && data.courrielEnvoye === "oui" && (
+
+            {data.statut === "en attente" && data.courrielEnvoye.length > 0 && (
               <DialogTrigger asChild>
                 <DropdownMenuItem>
                   <Check className=" h-4 w-4 mr-2" />
