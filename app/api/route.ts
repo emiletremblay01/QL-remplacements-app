@@ -30,10 +30,6 @@ export async function POST(req: Request) {
       return new NextResponse("heuresQuart required", { status: 400 });
     }
 
-    if (!body.courrielEnvoye) {
-      return new NextResponse("courrielEnvoye required", { status: 400 });
-    }
-
     const remplacement = await prismadb.remplacement.create({
       data: {
         nomEquipier: body.nomEquipier,
@@ -43,7 +39,6 @@ export async function POST(req: Request) {
         posteQuart: body.posteQuart,
         heuresQuart: body.heuresQuart,
 
-        courrielEnvoye: body.courrielEnvoye,
         statut: "en attente",
         nomEquipierRemplacant: "",
         remplacementEffectuePar: "",

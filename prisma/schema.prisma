@@ -9,7 +9,7 @@ datasource db {
 
 model Remplacement {
   id                      String   @id @default(auto()) @map("_id") @db.ObjectId
-  courrielEnvoye          String
+  courrielEnvoye          DateTime[]    @default([])
   dateDemande             DateTime @db.Date
   dateQuart               DateTime @db.Date
   heuresQuart             String

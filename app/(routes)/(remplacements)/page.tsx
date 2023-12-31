@@ -30,13 +30,17 @@ export default async function HomePage() {
     result +=
       "Voici nos remplacements à combler pour les prochains jours: \n\n";
 
+    const formatter = new Intl.DateTimeFormat("fr-CA", {
+      day: "2-digit",
+      month: "short",
+    });
     remplacements.map((remplacement) => {
+      const { statut } = remplacement;
+      if (statut === "approuvé") return;
+
       const { dateQuart, heuresQuart, posteQuart, courrielEnvoye } =
         remplacement;
-      const formatter = new Intl.DateTimeFormat("fr-CA", {
-        day: "2-digit",
-        month: "short",
-      });
+
       const formatted = formatter.format(dateQuart);
       let icon = "";
       switch (posteQuart) {
@@ -56,7 +60,7 @@ export default async function HomePage() {
           break;
       }
       let relance = "";
-      if (courrielEnvoye && courrielEnvoye !== "non") {
+      if (courrielEnvoye.length > 0) {
         relance = "(relancé)";
       }
 

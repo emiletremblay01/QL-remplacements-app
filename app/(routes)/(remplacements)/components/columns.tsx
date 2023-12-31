@@ -59,17 +59,20 @@ export const columns: ColumnDef<Remplacement>[] = [
     accessorKey: "courrielEnvoye",
     header: "Courriel envoyé?",
     cell: ({ row }) => {
-      const statut = row.getValue("courrielEnvoye") as string;
+      const dates = row.getValue("courrielEnvoye") as Date[];
+      if (dates.length <= 0) {
+        return <div className="text-red-800 animate-pulse">NON</div>;
+      }
 
-      return (
-        <div
-          className={cn("", {
-            " text-red-800 animate-pulse": statut === "non",
-          })}
-        >
-          {statut === "non" ? statut.toUpperCase() : statut}
-        </div>
+      const formatter = new Intl.DateTimeFormat("fr-CA", {
+        day: "2-digit",
+        month: "short",
+      });
+      const highestDate = dates.reduce((a, b) =>
+        a.getTime() > b.getTime() ? a : b
       );
+      const formatted = formatter.format(highestDate);
+      return <div>{formatted}</div>;
     },
   },
   {

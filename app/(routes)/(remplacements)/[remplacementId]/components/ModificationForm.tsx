@@ -38,6 +38,7 @@ import { CalendarIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { fi, tr } from "date-fns/locale";
 
 interface RemplacementFormProps {
   initialData: Remplacement | null;
@@ -53,10 +54,7 @@ const formSchema = z.object({
   dateQuart: z.date({ required_error: "dateQuart is required." }),
   posteQuart: z.string({ required_error: "posteQuart is required." }),
   heuresQuart: z.string({ required_error: "heuresQuart is required." }),
-
-  courrielEnvoye: z.enum(["oui", "non"], {
-    required_error: "Selectionner oui ou non.",
-  }),
+  courrielEnvoye: z.enum(["true", "false"]),
   statut: z.enum(["en attente", "approuvé", "non remplacé"], {
     required_error: "Selectionner un statut.",
   }),
@@ -72,6 +70,7 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
     day: "2-digit",
     month: "short",
   }).format(new Date());
+
   const [loading, setLoading] = useState(false);
 
   // 1. Define your form.
@@ -86,14 +85,12 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
               : initialData.statut === "approuvé"
               ? "approuvé"
               : "non remplacé",
-
-          courrielEnvoye: initialData.courrielEnvoye === "oui" ? "oui" : "non",
+          courrielEnvoye:
+            initialData.courrielEnvoye.length > 0 ? "true" : "false",
           nomEquipierRemplacant: initialData.nomEquipierRemplacant ?? "",
           remplacementEffectuePar: initialData.remplacementEffectuePar ?? "",
         }
-      : {
-          courrielEnvoye: "non",
-        },
+      : { courrielEnvoye: "false" },
   });
 
   // 2. Define a submit handler.
@@ -118,10 +115,21 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
           );
       }
 
-      console.log(values);
-
       if (initialData) {
-        await axios.patch(`/api/${initialData.id}`, values);
+        let courrielEnvoye = initialData.courrielEnvoye;
+        if (
+          initialData.courrielEnvoye.length <= 0 &&
+          values.courrielEnvoye === "true"
+        ) {
+          courrielEnvoye.unshift(new Date());
+        }
+        if (values.courrielEnvoye === "false") {
+          courrielEnvoye = [];
+        }
+        await axios.patch(`/api/${initialData.id}`, {
+          ...values,
+          courrielEnvoye,
+        });
         router.refresh();
         router.push("/");
         toast({ title: "Remplacement modifié avec succès." });
@@ -153,7 +161,7 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
                 <FormItem className=" md:basis-60 shrink-0">
                   <FormLabel>Nom de l'équipier</FormLabel>
                   <FormControl>
-                    <Input placeholder="Angelique Y." {...field} />
+                    <Input placeholder="Dwight Schrute" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -214,7 +222,7 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
                 <FormItem>
                   <FormLabel>Reçue par:</FormLabel>
                   <FormControl>
-                    <Input placeholder="Emile T." {...field} />
+                    <Input placeholder="Michael Scott" {...field} />
                   </FormControl>
                   <FormDescription>
                     Le nom du directeur qui a reçu la demande.
@@ -315,8 +323,8 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
               control={form.control}
               name="courrielEnvoye"
               render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormLabel>Courriel envoyé aux équipiers?</FormLabel>
+                <FormItem>
+                  <FormLabel>Courriel envoyé?</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -325,15 +333,15 @@ export function ModificationForm({ initialData }: RemplacementFormProps) {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="non" />
+                          <RadioGroupItem value="true" />
                         </FormControl>
-                        <FormLabel className="font-normal">Non</FormLabel>
+                        <FormLabel className="font-normal">Oui</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="oui" />
+                          <RadioGroupItem value="false" />
                         </FormControl>
-                        <FormLabel className="font-normal">Oui</FormLabel>
+                        <FormLabel className="font-normal">Non</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>

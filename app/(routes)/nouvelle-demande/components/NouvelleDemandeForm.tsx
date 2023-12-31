@@ -51,10 +51,6 @@ const formSchema = z.object({
   heuresQuart: z.string({
     required_error: "Les heures du quart sont requises",
   }),
-
-  courrielEnvoye: z.enum(["oui", "non"], {
-    required_error: "Sélectionner oui ou non.",
-  }),
 });
 
 export function NouvelleDemandeForm() {
@@ -65,7 +61,6 @@ export function NouvelleDemandeForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       dateDemande: new Date(),
-      courrielEnvoye: "non",
     },
   });
 
@@ -102,7 +97,7 @@ export function NouvelleDemandeForm() {
                 <FormItem className=" md:basis-60 shrink-0">
                   <FormLabel>Nom de l'équipier</FormLabel>
                   <FormControl>
-                    <Input placeholder="Angelique Y." {...field} />
+                    <Input placeholder="Dwight Schrute" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +158,7 @@ export function NouvelleDemandeForm() {
                 <FormItem>
                   <FormLabel>Reçue par:</FormLabel>
                   <FormControl>
-                    <Input placeholder="Emile T." {...field} />
+                    <Input placeholder="Michael Scott" {...field} />
                   </FormControl>
                   <FormDescription>
                     Le nom du directeur qui a reçu la demande.
@@ -254,37 +249,6 @@ export function NouvelleDemandeForm() {
                   <FormLabel>Heures du quart</FormLabel>
                   <FormControl>
                     <Input placeholder="11h30 - 18h" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="courrielEnvoye"
-              render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormLabel>Courriel envoyé aux équipiers?</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex flex-col space-y-1"
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="non" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Non</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="oui" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Oui</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
