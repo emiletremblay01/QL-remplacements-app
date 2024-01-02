@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 
-import { getLatestRemplacements } from "@/lib/utils";
+import { getLatestRemplacements } from "@/actions/server-actions";
 import Link from "next/link";
 import { Wand2 } from "lucide-react";
 import { Modal } from "@/components/ui/modal";
