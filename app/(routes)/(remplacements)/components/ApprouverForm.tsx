@@ -63,7 +63,13 @@ export function ApprouverForm({
 
       if (initialData) {
         initialData.statut = "approuvé";
-        await axios.patch(`/api/${initialData.id}`, { ...initialData, values });
+        const request = {
+          ...initialData,
+          nomEquipierRemplacant: values.nomEquipierRemplacant,
+          remplacementEffectuePar: values.remplacementEffectuePar,
+        };
+        console.log(request);
+        await axios.patch(`/api/${initialData.id}`, request);
         router.push("/");
         toast({ title: "Remplacement approuvé avec succès." });
         router.refresh();
