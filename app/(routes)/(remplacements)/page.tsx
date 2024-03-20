@@ -4,14 +4,11 @@
 // TODO: Change Affichage de colonnes columns names
 // TODO: Clean up code imports
 
-import { Button } from "@/components/ui/button";
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 
 import { getLatestRemplacements } from "@/actions/server-actions";
-import Link from "next/link";
-import { Wand2 } from "lucide-react";
-import { Modal } from "@/components/ui/modal";
+
 import GenerateEmailBtn from "@/components/GenerateEmailBtn";
 export const revalidate = 0;
 export default async function HomePage() {
