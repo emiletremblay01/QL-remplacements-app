@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   title: "Remplacements App",
   description: "Application de gestion des remplacements",
 };
-import { Toaster } from "@/components/ui/toaster";
-import { Separator } from "@/components/ui/separator";
 
 export default function RootLayout({
   children,
@@ -27,15 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <footer className="mt-16">
-            <Separator />
-            <p className="h-24 flex text-sm items-center justify-center text-muted-foreground">
-              Développé par Émile Tremblay. Tous droits réservés.
-            </p>
-          </footer>
-          <Toaster />
+          {children}
         </ThemeProvider>
       </body>
     </html>

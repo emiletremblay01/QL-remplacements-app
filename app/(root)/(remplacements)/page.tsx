@@ -70,13 +70,13 @@ export default async function HomePage() {
     ])} \n\n`;
     return result;
   };
-  const a = courrielFormatter();
+  const startingText = courrielFormatter();
   return (
     <div className="container mx-auto py-10 space-y-4">
       <h1 className=" font-semibold text-muted-foreground text-lg">
         Remplacements des jours à venir
       </h1>
-      <GenerateEmailBtn startingText={a} />
+      <GenerateEmailBtn startingText={startingText} />
       <DataTable columns={columns} data={remplacements} />
     </div>
   );
