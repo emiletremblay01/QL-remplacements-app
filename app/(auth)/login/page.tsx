@@ -1,16 +1,44 @@
 "use client";
 
-import * as React from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
+import { is } from "date-fns/locale";
 
 export default function LoginPage() {
-  const [value, setValue] = React.useState("");
+  const router = useRouter();
+  const [value, setValue] = useState("");
 
+  useEffect(() => {
+    if (value.length === 4) {
+      const fetch = async () => {
+        let isValid = false;
+        try {
+          const response = await axios.post("/api/auth", { nip: value });
+          if (response.status === 200) {
+            isValid = true;
+            router.push("/");
+            return;
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setValue("");
+          if (!isValid) {
+            toast({ title: "NIP invalide" });
+          }
+        }
+      };
+
+      fetch();
+    }
+  }, [value]);
   return (
     <div className="space-y-2">
       <InputOTP
@@ -26,11 +54,7 @@ export default function LoginPage() {
         </InputOTPGroup>
       </InputOTP>
       <div className="text-center text-sm">
-        {value.length === 4 ? (
-          <>Enter your one-time password.</>
-        ) : (
-          <>You entered: {value}</>
-        )}
+        Entrez votre NIP à 4 chiffres pour vous connecter.
       </div>
     </div>
   );

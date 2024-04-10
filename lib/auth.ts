@@ -1,7 +1,7 @@
 "use server";
 import { NextRequest, NextResponse } from "next/server";
-
-export function isAuthenticated(request: NextRequest) {
+import axios from "axios";
+export async function isAuthenticated(request: NextRequest) {
   try {
     const cookie = request.cookies.get("nip");
     const nip = process.env.QL_NIP;
@@ -25,5 +25,23 @@ export function isAuthenticated(request: NextRequest) {
     console.error(error);
 
     return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
+import { cookies } from "next/headers";
+export async function checkAuth() {
+  try {
+    const cookieValue = cookies().get("nip")?.value;
+    console.log(cookieValue);
+    if (!cookieValue) {
+      return false;
+    }
+
+    const response = await axios.post("/api/auth", { nip: cookieValue });
+    console.log(response.status);
+    return response.status === 200;
+  } catch (error) {
+    console.error("" + error);
+    return false;
   }
 }

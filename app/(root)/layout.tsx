@@ -1,13 +1,18 @@
 import Navbar from "@/components/Navbar";
 
-import { Toaster } from "@/components/ui/toaster";
 import { Separator } from "@/components/ui/separator";
-
-export default function RootLayout({
+import { redirect } from "next/navigation";
+import { auth } from "@/actions/auth-server-actions";
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const isAuth = await auth();
+
+  if (!isAuth) {
+    redirect("/login");
+  }
   return (
     <>
       <Navbar />
@@ -18,7 +23,6 @@ export default function RootLayout({
           Développé par Émile Tremblay. Tous droits réservés.
         </p>
       </footer>
-      <Toaster />
     </>
   );
 }
