@@ -24,7 +24,7 @@ export default function Navbar() {
   ];
   return (
     <>
-      <nav className="flex justify-between py-6 px-6 ">
+      <nav className="flex justify-between py-6 px-6">
         <div className="inline-flex gap-6 items-center">
           {routes.map((route) => (
             <Link
@@ -44,7 +44,8 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Button asChild>
             <Link href="/nouvelle-demande">
-              <Plus className="mr-2 h-4 w-4" /> Nouvelle demande
+              <Plus className="h-4 w-4" />
+              <div className="ml-2 hidden sm:flex">Nouvelle demande</div>
             </Link>
           </Button>
 

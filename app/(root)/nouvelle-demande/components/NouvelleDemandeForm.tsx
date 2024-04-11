@@ -225,7 +225,7 @@ export function NouvelleDemandeForm() {
                   <FormLabel>Poste</FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className=" w-full">
                         <SelectValue placeholder="Sélectionner le poste du quart" />
                       </SelectTrigger>
                     </FormControl>

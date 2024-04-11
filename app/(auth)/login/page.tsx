@@ -40,7 +40,7 @@ export default function LoginPage() {
     }
   }, [value]);
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col items-center mt-64 space-y-2">
       <InputOTP
         maxLength={4}
         value={value}
@@ -54,7 +54,8 @@ export default function LoginPage() {
         </InputOTPGroup>
       </InputOTP>
       <div className="text-center text-sm">
-        Entrez votre NIP à 4 chiffres pour vous connecter.
+        Entrez votre NIP à 4 chiffres pour vous connecter. <br /> (même que pour
+        UberEats)
       </div>
     </div>
   );
