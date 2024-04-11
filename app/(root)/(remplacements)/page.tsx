@@ -4,14 +4,11 @@
 // TODO: Change Affichage de colonnes columns names
 // TODO: Clean up code imports
 
-import { Button } from "@/components/ui/button";
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 
 import { getLatestRemplacements } from "@/actions/server-actions";
-import Link from "next/link";
-import { Wand2 } from "lucide-react";
-import { Modal } from "@/components/ui/modal";
+
 import GenerateEmailBtn from "@/components/GenerateEmailBtn";
 export const revalidate = 0;
 export default async function HomePage() {
@@ -73,13 +70,13 @@ export default async function HomePage() {
     ])} \n\n`;
     return result;
   };
-  const a = courrielFormatter();
+  const startingText = courrielFormatter();
   return (
     <div className="container mx-auto py-10 space-y-4">
       <h1 className=" font-semibold text-muted-foreground text-lg">
         Remplacements des jours à venir
       </h1>
-      <GenerateEmailBtn startingText={a} />
+      <GenerateEmailBtn startingText={startingText} />
       <DataTable columns={columns} data={remplacements} />
     </div>
   );

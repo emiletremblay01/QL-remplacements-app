@@ -5,39 +5,47 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const {
+      nomEquipier,
+      dateDemande,
+      recuPar,
+      dateQuart,
+      posteQuart,
+      heuresQuart,
+    } = body;
 
-    if (!body.nomEquipier) {
+    if (!nomEquipier) {
       return new NextResponse("nomEquipier required", { status: 400 });
     }
 
-    if (!body.dateDemande) {
+    if (!dateDemande) {
       return new NextResponse("dateDemande required", { status: 400 });
     }
 
-    if (!body.recuPar) {
+    if (!recuPar) {
       return new NextResponse("recuPar required", { status: 400 });
     }
 
-    if (!body.dateQuart) {
+    if (!dateQuart) {
       return new NextResponse("dateQuart required", { status: 400 });
     }
 
-    if (!body.posteQuart) {
+    if (!posteQuart) {
       return new NextResponse("posteQuart required", { status: 400 });
     }
 
-    if (!body.heuresQuart) {
+    if (!heuresQuart) {
       return new NextResponse("heuresQuart required", { status: 400 });
     }
 
     const remplacement = await prismadb.remplacement.create({
       data: {
-        nomEquipier: body.nomEquipier,
-        dateDemande: body.dateDemande,
-        recuPar: body.recuPar,
-        dateQuart: body.dateQuart,
-        posteQuart: body.posteQuart,
-        heuresQuart: body.heuresQuart,
+        nomEquipier: nomEquipier,
+        dateDemande: dateDemande,
+        recuPar: recuPar,
+        dateQuart: dateQuart,
+        posteQuart: posteQuart,
+        heuresQuart: heuresQuart,
 
         statut: "en attente",
         nomEquipierRemplacant: "",
