@@ -1,10 +1,8 @@
 import Navbar from "@/components/Navbar";
 
 import { Separator } from "@/components/ui/separator";
-import { redirect } from "next/navigation";
-import { auth } from "@/actions/auth-server-actions";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
