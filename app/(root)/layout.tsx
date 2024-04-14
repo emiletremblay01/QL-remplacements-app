@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-
+import { auth } from "@/actions/auth-server-actions";
 import { Separator } from "@/components/ui/separator";
 
 export default async function RootLayout({
@@ -8,6 +8,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
 
+  const isAuth = await auth();
+  console.log(isAuth);
+  
   return (
     <>
       <Navbar />
