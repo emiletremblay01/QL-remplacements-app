@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { auth } from "@/actions/auth-server-actions";
 import { Separator } from "@/components/ui/separator";
+import { redirect } from 'next/navigation';
 
 export default async function RootLayout({
   children,
@@ -10,7 +11,9 @@ export default async function RootLayout({
 
   const isAuth = await auth();
   console.log(isAuth);
-  
+  if (!isAuth) {
+    redirect('/login');
+  }
   return (
     <>
       <Navbar />
