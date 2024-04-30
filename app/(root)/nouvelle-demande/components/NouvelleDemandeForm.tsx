@@ -87,14 +87,14 @@ export function NouvelleDemandeForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 flex flex-col gap-6 items-start"
+          className="w-full max-w-sm flex flex-col gap-6 items-start"
         >
-          <div className="flex flex-col md:flex-row gap-6 items-start w-full ">
+          <div className="flex flex-col gap-6 items-start w-full">
             <FormField
               control={form.control}
               name="nomEquipier"
               render={({ field }) => (
-                <FormItem className=" md:basis-60 shrink-0">
+                <FormItem className="w-full">
                   <FormLabel>Nom de l'équipier</FormLabel>
                   <FormControl>
                     <Input placeholder="Dwight Schrute" {...field} />
@@ -118,7 +118,7 @@ export function NouvelleDemandeForm() {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-full pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -155,7 +155,7 @@ export function NouvelleDemandeForm() {
               control={form.control}
               name="recuPar"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Reçue par:</FormLabel>
                   <FormControl>
                     <Input placeholder="Michael Scott" {...field} />
@@ -171,7 +171,7 @@ export function NouvelleDemandeForm() {
 
           <Separator />
 
-          <div className="flex flex-col md:flex-row gap-6 items-start w-full ">
+          <div className="flex flex-col gap-6 items-start w-full">
             <FormField
               control={form.control}
               name="dateQuart"
@@ -186,7 +186,7 @@ export function NouvelleDemandeForm() {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-full pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -221,11 +221,11 @@ export function NouvelleDemandeForm() {
               control={form.control}
               name="posteQuart"
               render={({ field }) => (
-                <FormItem className="w-60">
+                <FormItem className="w-full">
                   <FormLabel>Poste</FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
-                      <SelectTrigger className=" w-full">
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Sélectionner le poste du quart" />
                       </SelectTrigger>
                     </FormControl>
@@ -245,10 +245,10 @@ export function NouvelleDemandeForm() {
               control={form.control}
               name="heuresQuart"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Heures du quart</FormLabel>
                   <FormControl>
-                    <Input placeholder="11h30 - 18h" {...field} />
+                    <Input placeholder="11h30@18h" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
