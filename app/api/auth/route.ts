@@ -10,7 +10,11 @@ export async function POST(request: Request) {
     if (nip != nipEnv) {
       return new Response("nip is not valid", { status: 401 });
     }
-    cookies().set("nip", nip);
+    const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000;
+    const expirationDate = new Date(Date.now() + twoWeeksInMs);
+    cookies().set("nip", nip, {
+      expires: expirationDate,
+    });
     return new Response("Authorized!", {
       status: 200,
     });
