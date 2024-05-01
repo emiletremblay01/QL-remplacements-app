@@ -89,7 +89,7 @@ export function NouvelleDemandeForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full max-w-sm flex flex-col gap-6 items-start"
         >
-          <div className="flex flex-col gap-6 items-start w-full">
+          <div className="flex flex-col gap-4 items-start w-full">
             <FormField
               control={form.control}
               name="nomEquipier"
@@ -171,12 +171,12 @@ export function NouvelleDemandeForm() {
 
           <Separator />
 
-          <div className="flex flex-col gap-6 items-start w-full">
+          <div className="flex flex-col gap-4 items-start w-full">
             <FormField
               control={form.control}
               name="dateQuart"
               render={({ field }) => (
-                <FormItem className="flex flex-col ">
+                <FormItem className="flex flex-col w-full">
                   <FormLabel className="mt-1 pt-0.5 mb-1">
                     Date du quart
                   </FormLabel>
