@@ -108,7 +108,7 @@ export function NouvelleDemandeForm() {
               control={form.control}
               name="dateDemande"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col w-full">
                   <FormLabel className="mt-1 pt-0.5 mb-1">
                     Date de la demande
                   </FormLabel>
