@@ -33,21 +33,19 @@ export const DownloadButton = ({
     // Add column names row
     let csvData = columnNames.join(",") + "\n";
 
-    // Filter data and keep only the required columns
-    const formattedData = data.map((item) => ({
-      dateDemande: formatDate(new Date(item.dateDemande)),
-      dateQuart: formatDate(new Date(item.dateQuart)),
-      heuresQuart: item.heuresQuart,
-      nomEquipier: item.nomEquipier,
-      nomEquipierRemplacant: item.nomEquipierRemplacant,
-      posteQuart: item.posteQuart,
-      remplacementEffectuePar: item.remplacementEffectuePar,
-    }));
-
-    // Convert formatted data to CSV string and append to csvData
-    csvData += formattedData
-      .map((item) => Object.values(item).join(","))
-      .join("\n");
+    // Format and append data rows
+    data.forEach((item) => {
+      const formattedRow = [
+        formatDate(new Date(item.dateDemande)),
+        formatDate(new Date(item.dateQuart)),
+        item.heuresQuart,
+        item.posteQuart,
+        item.nomEquipier,
+        item.nomEquipierRemplacant,
+        item.remplacementEffectuePar,
+      ];
+      csvData += formattedRow.join(",") + "\n";
+    });
 
     return csvData;
   };
@@ -55,14 +53,19 @@ export const DownloadButton = ({
   const handleDownload = () => {
     const csvData = formatDataForCSV(data);
 
-    const blob = new Blob([csvData], { type: "text/csv" });
+    // Create a Blob with UTF-8 encoding
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
     const url = window.URL.createObjectURL(blob);
+
+    // Create a link element and trigger the download
     const a = document.createElement("a");
     a.href = url;
     a.download = `${fileName}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+
+    // Revoke the Object URL to free up resources
     window.URL.revokeObjectURL(url);
   };
 
