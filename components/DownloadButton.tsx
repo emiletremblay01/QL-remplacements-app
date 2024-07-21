@@ -3,6 +3,7 @@ import { convertToCSV } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { Remplacement } from "@/types";
+import Papa from 'papaparse';
 
 export const DownloadButton = ({
   data,
@@ -19,35 +20,22 @@ export const DownloadButton = ({
   };
 
   const formatDataForCSV = (data: Remplacement[]) => {
-    // Define column names
-    const columnNames = [
-      "Date de la demande",
-      "Date du quart",
-      "Heures du quart",
-      "Poste",
-      "Nom de l'equipier",
-      "Nom de l'equipier remplaçant",
-      "Directeur",
-    ];
+    // Format data for PapaParse
+    const csvData = data.map(item => ({
+      "Date de la demande": formatDate(new Date(item.dateDemande)),
+      "Date du quart": formatDate(new Date(item.dateQuart)),
+      "Heures du quart": item.heuresQuart,
+      "Poste": item.posteQuart,
+      "Nom de l'equipier": item.nomEquipier,
+      "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
+      "Directeur": item.remplacementEffectuePar,
+    }));
 
-    // Add column names row
-    let csvData = columnNames.join(",") + "\n";
-
-    // Format and append data rows
-    data.forEach((item) => {
-      const formattedRow = [
-        formatDate(new Date(item.dateDemande)),
-        formatDate(new Date(item.dateQuart)),
-        item.heuresQuart,
-        item.posteQuart,
-        item.nomEquipier,
-        item.nomEquipierRemplacant,
-        item.remplacementEffectuePar,
-      ];
-      csvData += formattedRow.join(",") + "\n";
+    return Papa.unparse(csvData, {
+      delimiter: ",",
+      header: true,
+      encoding: "utf-8",
     });
-
-    return csvData;
   };
 
   const handleDownload = () => {
