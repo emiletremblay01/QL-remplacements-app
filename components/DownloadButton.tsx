@@ -18,7 +18,7 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     "Date du quart": formatDate(new Date(item.dateQuart)),
     "Heures du quart": item.heuresQuart,
     Poste: item.posteQuart,
-    "Nom de l'equipier": item.nomEquipier,
+    "Nom de l'équipier": item.nomEquipier,
     "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
     Directeur: item.remplacementEffectuePar,
   }));
@@ -26,8 +26,8 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
   const final = Papa.unparse(csvData);
 
   return (
-    <Button>
-      <CSVLink data={final}>
+    <Button asChild>
+      <CSVLink data={final} filename={"remplacements.csv"}>
         Télécharger
         <DownloadIcon className="ml-2 h-4 w-4" />
       </CSVLink>
