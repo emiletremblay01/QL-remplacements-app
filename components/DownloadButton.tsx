@@ -1,5 +1,4 @@
 "use client";
-import { convertToCSV } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { Remplacement } from "@/types";
@@ -31,30 +30,31 @@ export const DownloadButton = ({
       "Directeur": item.remplacementEffectuePar,
     }));
 
-    return Papa.unparse(csvData, {
-      delimiter: ",",
-      header: true,
-      encoding: "utf-8",
-    });
+    return Papa.unparse(csvData);
   };
 
   const handleDownload = () => {
     const csvData = formatDataForCSV(data);
-
-    // Create a Blob with UTF-8 encoding
-    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+    
+    // Create a Blob object for the CSV data
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    
+    // Create a temporary URL for the Blob
     const url = window.URL.createObjectURL(blob);
-
-    // Create a link element and trigger the download
-    const a = document.createElement("a");
+    
+    // Create a temporary <a> element to trigger the download
+    const a = document.createElement('a');
+    a.style.display = 'none';
     a.href = url;
-    a.download = `${fileName}.csv`;
+    a.download = 'data.csv';  // Specify the file name
     document.body.appendChild(a);
+    
+    // Programmatically click the <a> element to trigger the download
     a.click();
-    document.body.removeChild(a);
-
-    // Revoke the Object URL to free up resources
+    
+    // Cleanup: remove the <a> element and revoke the URL
     window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   };
 
   return (
