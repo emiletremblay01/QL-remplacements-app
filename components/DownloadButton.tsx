@@ -43,9 +43,9 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     "Heures du quart": item.heuresQuart,
     "Poste": item.posteQuart,
     "Nom de l'équipier": item.nomEquipier,
-    "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
+    "Nom de l'équipier remplaçant": item.nomEquipierRemplacant,
     "Directeur": item.remplacementEffectuePar,
-    "Date d'envoi du courriel": item.courrielEnvoye.length > 0 ? formatDateWithHour(new Date(item.courrielEnvoye[item.courrielEnvoye.length - 1])) : "Pas de courriel envoyé"
+    "Dernier courriel envoyé": item.courrielEnvoye.length > 0 ? formatDateWithHour(new Date(item.courrielEnvoye[item.courrielEnvoye.length - 1])) : "Pas de courriel envoyé"
   }));
 
   const final = Papa.unparse(csvData);
