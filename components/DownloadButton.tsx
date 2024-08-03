@@ -34,7 +34,7 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     const formattedTime = timeFormatter.format(date);
 
     // Combine formatted date and time
-    return `${formattedDate}, ${formattedTime}`;
+    return `${formattedDate} à ${formattedTime}`;
   };
   const csvData = data.map((item) => ({
     "Année": (new Date(item.dateDemande)).getFullYear(),
@@ -45,7 +45,7 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     "Nom de l'équipier": item.nomEquipier,
     "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
     "Directeur": item.remplacementEffectuePar,
-    "Date d'envoi du courriel": item.courrielEnvoye.length > 0 ? formatDateWithHour(new Date(item.courrielEnvoye[item.courrielEnvoye.length - 1])) : "Pas de courriel envoyé",
+    "Date d'envoi du courriel": item.courrielEnvoye.length > 0 ? formatDateWithHour(new Date(item.courrielEnvoye[item.courrielEnvoye.length - 1])) : "Pas de courriel envoyé"
   }));
 
   const final = Papa.unparse(csvData);
