@@ -45,7 +45,7 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     "Nom de l'équipier": item.nomEquipier,
     "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
     "Directeur": item.remplacementEffectuePar,
-    "Date d'envoi du courriel": formatDateWithHour(new Date(item.at(-1))),
+    "Date d'envoi du courriel": formatDateWithHour(new Date(item.courrielEnvoye.at(-1))),
   }));
 
   const final = Papa.unparse(csvData);
