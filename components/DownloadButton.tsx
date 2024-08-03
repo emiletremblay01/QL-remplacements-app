@@ -7,20 +7,45 @@ import { CSVLink } from "react-csv";
 
 export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
   const formatDate = (date: Date): string => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    const formatter = new Intl.DateTimeFormat('fr-FR', {
+        day: 'numeric',
+        month: 'long'
+    });
+
+    return formatter.format(date);
   };
 
+  const formatDateWithHour = (date: Date): string => {
+    // Create an Intl.DateTimeFormat object for French locale with the desired options
+    const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: undefined // Exclude year from the date part
+    });
+
+    const timeFormatter = new Intl.DateTimeFormat('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false // Use 24-hour format
+    });
+
+    // Format date and time separately
+    const formattedDate = dateFormatter.format(date);
+    const formattedTime = timeFormatter.format(date);
+
+    // Combine formatted date and time
+    return `${formattedDate}, ${formattedTime}`;
+  };
   const csvData = data.map((item) => ({
+    "Année": (new Date(item.dateDemande)).getFullYear(),
     "Date de la demande": formatDate(new Date(item.dateDemande)),
     "Date du quart": formatDate(new Date(item.dateQuart)),
     "Heures du quart": item.heuresQuart,
-    Poste: item.posteQuart,
+    "Poste": item.posteQuart,
     "Nom de l'équipier": item.nomEquipier,
     "Nom de l'equipier remplaçant": item.nomEquipierRemplacant,
-    Directeur: item.remplacementEffectuePar,
+    "Directeur": item.remplacementEffectuePar,
+    "Date d'envoi du courriel": formatDateWithHour(new Date(item.courrielEnvoye[-1])),
   }));
 
   const final = Papa.unparse(csvData);
