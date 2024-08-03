@@ -37,7 +37,7 @@ export const DownloadButton = ({ data }: { data: Remplacement[] }) => {
     return `${formattedDate} à ${formattedTime}`;
   };
   const csvData = data.map((item) => ({
-    "Année": (new Date(item.dateDemande)).getFullYear(),
+    "Année": (new Date(item.dateDemande)).getFullYear().toString(),
     "Date de la demande": formatDate(new Date(item.dateDemande)),
     "Date du quart": formatDate(new Date(item.dateQuart)),
     "Heures du quart": item.heuresQuart,
