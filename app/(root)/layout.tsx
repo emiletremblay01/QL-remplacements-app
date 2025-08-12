@@ -1,18 +1,17 @@
 import Navbar from "@/components/Navbar";
 import { auth } from "@/actions/auth-server-actions";
 import { Separator } from "@/components/ui/separator";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   const isAuth = await auth();
   console.log(isAuth);
   if (!isAuth) {
-    redirect('/login');
+    redirect("/login");
   }
   return (
     <>
